@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+
+<body>
+    <style>
+        li.cr.date {
+            height: 100px;
+            text-align: center;
+            font-size: 1.5em;
+            line-height: 100px;
+            vertical-align: middle;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border: blue 6px ridge;
+            border-radius: 20%;
+            border-style: double;
+            border-radius: 10%;
+        }
+        
+        li.cr.date.date-2 {
+            border-color: #8b4513
+        }
+        
+        li.cr.date div.c {
+            width: 70%;
+        }
+        
+        li.cr.date span {
+            width: 30%;
+            text-align: center;
+            transform: rotate(-90deg);
+        }
+        
+        li.cr.date input {
+            height: 100px;
+            color: lightgreen;
+            text-align: center;
+        }
+        
+        li.cr.date.date-1 input {
+            border-left: 1px blue solid;
+        }
+        
+        li.cr.date.date-2 input {
+            border-left: 1px #7e5030 solid;
+        }
+    </style>
+    <script type="text/javascript" src="build/dat.gui.js"></script>
+    <script type="text/javascript">
+        var obj = {
+            date_1: '3/19/2018',
+            message: 'Hello World',
+            displayOutline: false,
+            type: 'three',
+            maxSize: 6.0,
+            date_2: '3/19/2018',
+            speed: 5,
+            height: 10,
+            explode: function() {
+                alert('Bang!');
+            },
+        };
+
+        class DateController extends dat.controllers.StringController {
+            constructor(object, property) {
+                super(object, property);
+
+                const _this = this;
+
+                this.__selectHandler = function(s) {
+                    this.setValue(s);
+                }
+
+                jQuery(_this.__input).datepicker({
+                    onSelect: function(dateStr) {
+                        _this.__selectHandler(dateStr);
+                        // console.log(_this);
+                    },
+                    dateFormat: "DD, MM d, yy"
+                });
+
+            }
+
+        }
+        var gui = new dat.gui.GUI();
+
+        gui.remember(obj);
+        gui.add(new DateController(obj, 'date_1'), {
+            liClass: 'date date-1'
+        });
+
+        gui.add(obj, 'displayOutline');
+        gui.add(obj, 'explode');
+
+        gui.add(obj, 'maxSize').min(-10).max(10).step(0.25);
+
+
+        gui.add(new DateController(obj, 'date_2'), {
+            liClass: 'date date-2'
+        });
+        gui.add(obj, 'height').step(5); // Increment amount
+
+        // Choose from accepted values
+        gui.add(obj, 'type', ['one', 'two', 'three']);
+
+        // Choose from named values
+        gui.add(obj, 'speed', {
+            Stopped: 0,
+            Slow: 0.1,
+            Fast: 5
+        });
+    </script>
+</body>
+
+</html>
