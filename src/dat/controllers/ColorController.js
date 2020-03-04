@@ -266,7 +266,8 @@ class ColorController extends Controller {
     }
   }
 
-  updateDisplay() {
+  updateDisplay(force) {
+    if (!force && dom.isActive(this.__input)) return this;
     const i = interpret(this.getValue());
 
     if (i !== false) {

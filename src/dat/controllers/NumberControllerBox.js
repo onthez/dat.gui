@@ -79,9 +79,9 @@ class NumberControllerBox extends NumberController {
     }
 
     function onMouseDown(e) {
-      dom.bind(window, 'mousemove', onMouseDrag);
-      dom.bind(window, 'mouseup', onMouseUp);
-      prevY = e.clientY;
+//      dom.bind(window, 'mousemove', onMouseDrag); // jds removed to prevent drag changes inside numeric inputs
+//      dom.bind(window, 'mouseup', onMouseUp);
+//      prevY = e.clientY;
     }
 
     this.__input = document.createElement('input');
